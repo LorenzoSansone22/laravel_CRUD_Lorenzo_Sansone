@@ -1,19 +1,21 @@
-<nav class="navbar navbar-dark bg-dark shadow mb-4">
-    <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ route('homepage') }}">LARAVEL 10</a>
-        
-        <div class="d-flex align-items-center">
-            @auth
-                <span class="text-info me-3">Utente: {{ Auth::user()->name }}</span>
-                <a class="btn btn-outline-light btn-sm me-2" href="/dashboard">Dashboard</a>
-                <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-danger btn-sm">Esci (Logout)</button>
-                </form>
-            @else
-                <a class="btn btn-outline-light btn-sm me-2" href="/login">Accedi</a>
-                <a class="btn btn-primary btn-sm" href="/register">Registrati</a>
-            @endauth
-        </div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Laravel CRUD</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('articles.index') }}">Tutti gli Articoli</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('articles.create') }}">Crea Articolo</a>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
