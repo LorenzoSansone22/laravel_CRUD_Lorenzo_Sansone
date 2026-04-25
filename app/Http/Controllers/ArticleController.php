@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -20,13 +21,20 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        Article::create([
-            'title' => $request->title,
-            'subtitle' => $request->subtitle,
-            'body' => $request->body,
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
         ]);
 
-        return redirect()->route('articles.index')->with('success', 'Articolo creato con successo!');
+        $user = User::first();
+
+        Article::create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'user_id' => $user->id
+        ]);
+
+        return redirect()->route('articles.index');
     }
 
     public function show(Article $article)
@@ -41,18 +49,22 @@ class ArticleController extends Controller
 
     public function update(Request $request, Article $article)
     {
-        $article->update([
-            'title' => $request->title,
-            'subtitle' => $request->subtitle,
-            'body' => $request->body,
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required',
         ]);
 
-        return redirect()->route('articles.index')->with('success', 'Articolo aggiornato correttamente!');
+        $article->update([
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
+
+        return redirect()->route('articles.index');
     }
 
     public function destroy(Article $article)
     {
         $article->delete();
-        return redirect()->route('articles.index')->with('success', 'Articolo eliminato!');
+        return redirect()->route('articles.index');
     }
 }

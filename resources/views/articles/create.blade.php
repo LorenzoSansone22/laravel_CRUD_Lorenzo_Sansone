@@ -1,26 +1,24 @@
-<x-layout>
-    <x-slot:title>Crea Articolo</x-slot>
-
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h1 class="mb-4 text-center">Nuovo Articolo</h1>
-
-            <form action="{{ route('articles.store') }}" method="POST" class="card p-4 shadow border-0">
-                @csrf
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Titolo</label>
-                    <input type="text" name="title" class="form-control" placeholder="Inserisci il titolo">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Sottotitolo</label>
-                    <input type="text" name="subtitle" class="form-control" placeholder="Inserisci il sottotitolo">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Contenuto</label>
-                    <textarea name="body" rows="5" class="form-control" placeholder="Scrivi qui l'articolo"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 shadow-sm">Salva Articolo</button>
-            </form>
-        </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nuovo Articolo</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; margin: 0; }
+        .form-card { background: white; padding: 30px; border-radius: 10px; max-width: 600px; margin: 50px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+        button { background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <x-navbar />
+    <div class="form-card">
+        <h2>Nuovo Articolo</h2>
+        <form action="{{ route('articles.store') }}" method="POST">
+            @csrf
+            <input type="text" name="title" placeholder="Titolo" required>
+            <textarea name="content" rows="5" placeholder="Contenuto" required></textarea>
+            <button type="submit">Pubblica</button>
+        </form>
     </div>
-</x-layout>
+</body>
+</html>

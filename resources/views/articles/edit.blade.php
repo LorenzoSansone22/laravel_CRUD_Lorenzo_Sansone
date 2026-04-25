@@ -1,29 +1,24 @@
-<x-layout>
-    <x-slot:title>Modifica Articolo</x-slot>
-
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <form action="{{ route('articles.update', $article) }}" method="POST" class="card p-5 shadow">
-                @csrf
-                @method('PUT')
-                
-                <div class="mb-3">
-                    <label class="form-label">Titolo</label>
-                    <input type="text" name="title" class="form-control" value="{{ $article->title }}">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Sottotitolo</label>
-                    <input type="text" name="subtitle" class="form-control" value="{{ $article->subtitle }}">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Contenuto</label>
-                    <textarea name="body" class="form-control" rows="5">{{ $article->body }}</textarea>
-                </div>
-
-                <button type="submit" class="btn btn-warning">Aggiorna Articolo</button>
-            </form>
-        </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modifica</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; margin: 0; }
+        .form-card { background: white; padding: 30px; border-radius: 10px; max-width: 600px; margin: 50px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+        button { background: #2ecc71; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <x-navbar />
+    <div class="form-card">
+        <h2>Modifica Articolo</h2>
+        <form action="{{ route('articles.update', $article) }}" method="POST">
+            @csrf @method('PUT')
+            <input type="text" name="title" value="{{ $article->title }}" required>
+            <textarea name="content" rows="5" required>{{ $article->content }}</textarea>
+            <button type="submit">Salva Modifiche</button>
+        </form>
     </div>
-</x-layout>
+</body>
+</html>
