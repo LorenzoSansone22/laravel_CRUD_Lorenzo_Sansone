@@ -13,12 +13,13 @@
     <x-navbar />
     <div class="form-card">
         <h2>Nuovo Articolo</h2>
-        <form action="{{ route('articles.store') }}" method="POST">
-            @csrf
-            <input type="text" name="title" placeholder="Titolo" required>
-            <textarea name="content" rows="5" placeholder="Contenuto" required></textarea>
-            <button type="submit">Pubblica</button>
-        </form>
+       <form action="{{ route('articles.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <input type="text" name="title" placeholder="Titolo" required>
+    <textarea name="content" rows="5" placeholder="Contenuto" required></textarea>
+    <input type="file" name="image" accept="image/*">
+    <button type="submit">Pubblica</button>
+</form>
     </div>
 </body>
 </html>

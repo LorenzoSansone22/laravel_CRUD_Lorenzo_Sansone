@@ -20,6 +20,11 @@
     <div class="post-container">
         <h1>{{ $article->title }}</h1>
         <div class="meta">Scritto da: <strong>{{ $article->user ? $article->user->name : 'Anonimo' }}</strong></div>
+
+        @if($article->image)
+            <img src="{{ asset('storage/'.$article->image) }}" alt="{{ $article->title }}" style="width:100%;max-height:350px;object-fit:cover;border-radius:8px;margin-bottom:20px;">
+        @endif
+
         <div class="content">
             {{ $article->content }}
         </div>

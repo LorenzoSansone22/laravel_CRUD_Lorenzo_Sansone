@@ -13,12 +13,14 @@
     <x-navbar />
     <div class="form-card">
         <h2>Modifica Articolo</h2>
-        <form action="{{ route('articles.update', $article) }}" method="POST">
-            @csrf @method('PUT')
-            <input type="text" name="title" value="{{ $article->title }}" required>
-            <textarea name="content" rows="5" required>{{ $article->content }}</textarea>
-            <button type="submit">Salva Modifiche</button>
-        </form>
+        <form action="{{ route('articles.update', $article) }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
+    <input type="text" name="title" value="{{ $article->title }}" required>
+    <textarea name="content" rows="5" required>{{ $article->content }}</textarea>
+    <input type="file" name="image" accept="image/*">
+    <button type="submit">Salva Modifiche</button>
+</form>
     </div>
 </body>
 </html>

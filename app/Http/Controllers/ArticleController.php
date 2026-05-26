@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\Article;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -19,23 +20,28 @@ class ArticleController extends Controller
         return view('articles.create');
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-        ]);
+  public function store(Request $request)
+{
+    $request->validate([
+        'title' => 'required',
+        'content' => 'required',
+        'image' => 'nullable|image|max:2048',
+    ]);
 
-        $user = User::first();
-
-        Article::create([
-            'title' => $request->title,
-            'content' => $request->content,
-            'user_id' => $user->id
-        ]);
-
-        return redirect()->route('articles.index');
+    $imagePath = null;
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('articles', 'public');
     }
+
+    Article::create([
+        'title' => $request->title,
+        'content' => $request->content,
+        'image' => $imagePath,
+        'user_id' => Auth::id(),
+    ]);
+
+    return redirect()->route('articles.index');
+}
 
     public function show(Article $article)
     {
@@ -47,20 +53,30 @@ class ArticleController extends Controller
         return view('articles.edit', compact('article'));
     }
 
-    public function update(Request $request, Article $article)
-    {
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-        ]);
+  public function update(Request $request, Article $article)
+{
+    $request->validate([
+        'title' => 'required',
+        'content' => 'required',
+        'image' => 'nullable|image|max:2048',
+    ]);
 
-        $article->update([
-            'title' => $request->title,
-            'content' => $request->content,
-        ]);
+    $data = [
+        'title' => $request->title,
+        'content' => $request->content,
+    ];
 
-        return redirect()->route('articles.index');
+    if ($request->hasFile('image')) {
+        if ($article->image) {
+            Storage::disk('public')->delete($article->image);
+        }
+        $data['image'] = $request->file('image')->store('articles', 'public');
     }
+
+    $article->update($data);
+
+    return redirect()->route('articles.index');
+}
 
     public function destroy(Article $article)
     {

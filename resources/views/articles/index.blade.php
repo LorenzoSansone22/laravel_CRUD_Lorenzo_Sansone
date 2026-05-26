@@ -23,15 +23,19 @@
             @foreach($articles as $article)
             <div class="card">
                 <div class="card-body">
+                    @if($article->image)
+                        <img src="{{ asset('storage/'.$article->image) }}" alt="{{ $article->title }}" style="width:100%;height:180px;object-fit:cover;border-radius:8px;margin-bottom:10px;">
+                    @endif
                     <h3>{{ $article->title }}</h3>
                     <p>{{ Str::limit($article->content, 100) }}</p>
-                    <small>Autore: {{ $article->user->name }}</small>
+                    <small>Autore: {{ $article->user?->name ?? 'Anonimo' }}</small>
                 </div>
                 <div class="card-footer">
                     <a href="{{ route('articles.show', $article) }}" class="btn btn-show">Leggi</a>
                     <a href="{{ route('articles.edit', $article) }}" class="btn btn-edit">Modifica</a>
                     <form action="{{ route('articles.destroy', $article) }}" method="POST" style="display:inline;">
-                        @csrf @method('DELETE')
+                        @csrf
+                        @method('DELETE')
                         <button type="submit" class="btn btn-delete">X</button>
                     </form>
                 </div>
